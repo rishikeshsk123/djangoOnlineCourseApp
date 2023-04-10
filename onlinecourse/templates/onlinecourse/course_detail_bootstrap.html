@@ -51,9 +51,12 @@
                 {% endfor %}
             </div>
             
+            {% if user.is_authenticated %}
+            <br>
+            <p><b>Click here to view and take the exam.</b></p>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#exam">Start Exam</button>
             <div id="exam" class="collapse">
-                Click to expand elements within the collapse div
-                <form id="questionform" action="point to a submit view" method="post">
+                <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="POST">
                     {% for question in course.question_set.all %}
                     <div class="card mt-1">
                         <div class="card-header"><h5>{{ question.question_text}}</h5></div>
@@ -70,11 +73,11 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <input class="btn btn-success btn-block" type="submit" value="Submit">
                     {% endfor %}
+                    <input class="btn btn-success btn-block" type="submit" value="Submit">
                 </form>
             </div>
-                                
+            {% endif %}            
         </div>
 </body>
 </html>

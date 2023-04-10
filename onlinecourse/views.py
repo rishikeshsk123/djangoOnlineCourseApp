@@ -128,7 +128,7 @@ def extract_answers(request):
        if key.startswith('choice'):
            value = request.POST[key]
            choice_id = int(value)
-           submitted_anwsers.append(choice_id)
+           submitted_anwsers.append(Choice.objects.get(id=choice_id))
    return submitted_anwsers
 
 
@@ -143,6 +143,8 @@ def show_exam_result(request, course_id, submission_id):
     course = get_object_or_404(Course, pk=course_id)
     submission = Submission.objects.get(id=submission_id)
     choices = submission.chocies.all()
+    total_score = 0
+
     for choice in choices:
         if choice.is_correct:
             total_score += choice.question.grade
